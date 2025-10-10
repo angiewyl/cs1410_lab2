@@ -23,14 +23,13 @@ module STUDENT_alu
     logic [31:0] z_srl;
     logic [31:0] z_sra;
     logic [31:0] z_sll;
-    logic [31:0] z_cla;
-
     // AND
     and32 and_unit (.x(x), .y(y), .z(z_and));  // Note the syntax for inputs/outputs to the instantiated module.
 
     // ADD (RCA)
     // TODO: instantiate adder module
-    rca add (.a(x), .b(y), .if_sub(1'b0), .s(z_add), .overflow(ovf_add));
+    
+    // rca add (.a(x), .b(y), .if_sub(1'b0), .s(z_add), .overflow(ovf_add));
     
     // SUB
     // TODO: instantiate subtractor. Can you think of a way to implement the subtractor by reusing the adder module?
@@ -90,17 +89,18 @@ module STUDENT_alu
 
     // SRL
     // TODO: instantiate srl module
-
+    srl32 srl(.x(x), .sh(y[4:0]),.z(z_srl));
     // SRA
     // TODO: instantiate sra module
-
+    sra32 sra(.x(x), .sh(y[4:0]),.z(z_sra));
+    
     // SLL
     // TODO: instantiate sll module
-
+    sll32 sll(.x(x), .sh(y[4:0]),.z(z_sll));
+    
     // ADD (CLA)
     // TODO: instantiate cla adder. Comment out the ripple-carry adder instantiation from Part A
-
-
+    cla32 cla_add(.a(x), .b(y), .cin(1'b0), .s(z_add), .overflow(ovf_add));
 
     // MUX 8:1 to select the output z from the submodule outputs
     // The code given here only outputs z_and. How can you condition the output based on the operation?

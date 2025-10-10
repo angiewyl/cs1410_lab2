@@ -70,10 +70,6 @@ proc create_report { reportName command } {
   }
 }
 OPTRACE "synth_1" START { ROLLUP_AUTO }
-set_param chipscope.maxJobs 24
-set_param checkpoint.writeSynthRtdsInDcp 1
-set_msg_config -id {Synth 8-256} -limit 10000
-set_msg_config -id {Synth 8-638} -limit 10000
 OPTRACE "Creating in-memory project" START { }
 create_project -in_memory -part xc7a75tfgg484-1
 
@@ -114,6 +110,8 @@ read_xdc /home/angie_wong/cs1410_lab/lab2/lab2_server/constraints/xem7310.xdc
 set_property used_in_implementation false [get_files /home/angie_wong/cs1410_lab/lab2/lab2_server/constraints/xem7310.xdc]
 
 set_param ips.enableIPCacheLiteLoad 1
+
+read_checkpoint -auto_incremental -incremental /home/angie_wong/cs1410_lab/lab2/lab2_server/CS1410_lab2.srcs/utils_1/imports/synth_1/alu_top.dcp
 close [open __synthesis_is_running__ w]
 
 OPTRACE "synth_design" START { }
